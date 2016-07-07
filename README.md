@@ -7,6 +7,7 @@ If host was down and is available now an another message will be sent.
 Both text messages are configurable.
 
 Usage: sudo python pingtomail.py
+Sudo is required due pyping requirements.
 
 For working this application Google API is required.
 See Turn on the Gmail API section https://developers.google.com/gmail/api/quickstart/python
