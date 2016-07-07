@@ -1,5 +1,5 @@
 # ping-to-mail
-Python utility to ping hosts and send e-mail if host status is changed
+Python utility to continuously pinging hosts and send e-mail if a host status is changed.
 
 Programm takes ip list from ip_list file. Then availability is verifying for each element in this list.
 If host is down a message will be sent to configurable e-mail address.
