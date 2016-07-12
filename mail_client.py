@@ -9,20 +9,17 @@ from oauth2client import tools
 import httplib2
 import os
 
-try:
-    import argparse
-    flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
-except ImportError:
-    argparse = None
-    flags = None
-
 
 class GmailClient:
     """Wrapper for using gmail client API
 
     """
+    flags = None
 
     def __init__(self, gmail_client_settings):
+
+        self.flags = tools.argparser.parse_known_args()
+
         try:
             self.SCOPES = gmail_client_settings['scopes']
             self.CLIENT_SECRET_FILE = gmail_client_settings['secret_file']
@@ -58,10 +55,10 @@ class GmailClient:
         if not credentials or credentials.invalid:
             flow = client.flow_from_clientsecrets(self.CLIENT_SECRET_FILE, self.SCOPES)
             flow.user_agent = self.APPLICATION_NAME
-            if flags:
+            if self.flags:
 
                 print ('flags = true')
-                credentials = tools.run_flow(flow, store, flags)
+                credentials = tools.run_flow(flow, store, self.flags)
             else: # Needed only for compatibility with Python 2.6
                 credentials = tools.run(flow, store)
             print('Storing credentials to ' + credential_path)

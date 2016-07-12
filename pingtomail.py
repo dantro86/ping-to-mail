@@ -1,19 +1,18 @@
+from __future__ import print_function
 from ping_source import PingSource
 from mail_client import GmailClient
 import time
 import configparser
+import argparse
+from mail_client import tools
 
 
-def get_sources():
+def get_sources(args):
 
     config = configparser.RawConfigParser()
-
-    # TODO bring config file name to params
-    config.read('config.ini')
+    config.read(args[0].config)
 
     iplist_file = config.get('pingtomail.common', 'ip_list_file')
-
-    ips = []
 
     with open(iplist_file, 'r') as f:
         ips = [line.strip() for line in f]
@@ -51,20 +50,28 @@ def check_list(c_list):
                 source.reachable_bul = False
 
 
-def main():
+def create_arg_parser():
+    parser = argparse.ArgumentParser(description='Program settings.', parents=[tools.argparser])
+    parser.add_argument('-s', '--sleep', type=int, help='sleep time for ping running in sec. Default - 15', default=15)
+    parser.add_argument('-c', '--config', help='path to configuration file. Default - config.ini', default='config.ini')
 
-    # TODO bring sleep_time to params
-    sleep_time = 10
-    src_list = get_sources()
+    args = parser.parse_known_args()
+    return args
+
+
+def main():
+    args = create_arg_parser()
+    sleep_time = args[0].sleep
+    src_list = get_sources(args)
 
     while True:
-
         if src_list:
             print ('working')
             check_list(src_list)
 
         time.sleep(sleep_time)
 
-
 if __name__ == '__main__':
     main()
+
+
