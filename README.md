@@ -8,6 +8,9 @@ Both text messages are configurable.
 
 Usage: sudo python pingtomail.py
 
+-s SLEEP, --sleep SLEEP sleep time for ping running in sec. Default - 15
+-c CONFIG, --config CONFIG path to configuration file. Default - config.ini
+
 Sudo is required due pyping requirements.
 
 For working this application Google API is required.
