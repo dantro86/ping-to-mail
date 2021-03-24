@@ -39,12 +39,12 @@ def check_list(c_list):
         response = source.ping()
 
         if response.ret_code == 0:
-            print(source.ip + ' - reachable')
+            print(f'source.ip - reachable')
             if not source.reachable_bul:
                 source.send_mail()
                 source.reachable_bul = True
         else:
-            print(source.ip + ' - unreachable')
+            print(f'{source.ip} - unreachable')
             if source.reachable_bul:
                 source.send_mail()
                 source.reachable_bul = False
